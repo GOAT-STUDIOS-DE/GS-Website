@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Spiel</title>
+    <title>Ziegen Spiel</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         body {
             display: flex;
             flex-direction: column;
@@ -12,41 +14,46 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #71b7e6, #9b59b6);
-            font-family: 'Changa one', sans-serif;
+            font-family: 'Press Start 2P', cursive;
+            color: #333;
+            overflow: hidden;
         }
+
+        /* Retro Pixelated Background */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: -1;
+            background-size: 40px 40px;
+        }
+
         canvas {
-            border: 2px solid #333;
+            border: 4px solid #000;
             background-color: #fff;
-            border-radius: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
-        #score {
+        #score, #highscore, #speedControl {
             font-size: 24px;
             color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        #highscore {
-            font-size: 24px;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
         #speedControl {
-            font-size: 18px;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-top: 20px;
+            font-size: 22px;
+            color: #ffeb3b;
         }
         #speedSlider {
-            width: 200px;
-            margin-top: 10px;
+            width: 180px;
+            margin-top: 8px;
         }
         #gameOver {
             position: absolute;
@@ -55,21 +62,25 @@
             transform: translate(-50%, -50%);
             font-size: 48px;
             color: #fff;
-            background-color: rgba(0, 0, 0, 0.75);
-            padding: 20px 40px;
-            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 24px 48px;
+            border-radius: 12px;
             display: none;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
         #respawnButton {
             font-size: 24px;
             color: #fff;
             background-color: #e74c3c;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 16px;
             display: none;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         #respawnButton:hover {
             background-color: #c0392b;
@@ -77,6 +88,7 @@
     </style>
 </head>
 <body>
+    <div class="background"></div>
     <div id="score">Punkte: 0</div>
     <div id="highscore">Highscore: 0</div>
     <div id="speedControl">
@@ -96,16 +108,14 @@
         const speedDisplay = document.getElementById('speedDisplay');
         const speedSlider = document.getElementById('speedSlider');
         const box = 40;
-        let snake, food, score, direction, game, speed, highscore;
+        let goat, food, score, direction, game, speed, highscore;
 
-        function getRandomGreenColor() {
-            // Generiert eine zufällige grüne Farbe
-            const green = Math.floor(Math.random() * 128) + 128; // Bereich von 128 bis 255
-            return `rgb(0, ${green}, 0)`;
+        function getRandomColor() {
+            return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
         }
 
         function loadHighscore() {
-            highscore = localStorage.getItem('highscore') || 0;
+            highscore = parseInt(localStorage.getItem('highscore')) || 0;
             highscoreDisplay.textContent = `Highscore: ${highscore}`;
         }
 
@@ -118,7 +128,7 @@
         }
 
         function init() {
-            snake = [{ x: 4 * box, y: 5 * box }];
+            goat = [{ x: 4 * box, y: 5 * box }];
             food = { x: Math.floor(Math.random() * 10) * box, y: Math.floor(Math.random() * 10) * box };
             score = 0;
             direction = null;
@@ -128,108 +138,114 @@
             gameOverDisplay.style.display = 'none';
             respawnButton.style.display = 'none';
             loadHighscore();
-            clearInterval(game);
+            if (game) {
+                clearInterval(game);
+            }
             game = setInterval(draw, speed);
         }
 
         function setDirection(event) {
-            if (event.keyCode === 37 && direction !== 'RIGHT') {
+            const { keyCode } = event;
+            if (keyCode === 37 && direction !== 'RIGHT') {
                 direction = 'LEFT';
-            } else if (event.keyCode === 38 && direction !== 'DOWN') {
+            } else if (keyCode === 38 && direction !== 'DOWN') {
                 direction = 'UP';
-            } else if (event.keyCode === 39 && direction !== 'LEFT') {
+            } else if (keyCode === 39 && direction !== 'LEFT') {
                 direction = 'RIGHT';
-            } else if (event.keyCode === 40 && direction !== 'UP') {
+            } else if (keyCode === 40 && direction !== 'UP') {
                 direction = 'DOWN';
             }
         }
 
         function collision(head, array) {
-            for (let i = 0; i < array.length; i++) {
-                if (head.x === array[i].x && head.y === array[i].y) {
-                    return true;
-                }
-            }
-            return false;
+            return array.some(segment => head.x === segment.x && head.y === segment.y);
         }
 
-        function drawSnake() {
-            ctx.strokeStyle = 'black';
-            for (let i = 0; i < snake.length; i++) {
-                // Setzt unterschiedliche Farben für jedes Segment
-                ctx.fillStyle = (i === 0) ? 'green' : getRandomGreenColor();
-                ctx.fillRect(snake[i].x, snake[i].y, box, box);
-                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
-                ctx.lineJoin = 'round';
-
-                if (i === 0) { // Zeichnet die Augen für den Kopf
-                    // Zeichne Augen
+        function drawGoat() {
+            goat.forEach((segment, index) => {
+                ctx.fillStyle = index === 0 ? 'white' : getRandomColor();
+                ctx.strokeStyle = 'black';
+                ctx.fillRect(segment.x, segment.y, box, box);
+                ctx.strokeRect(segment.x, segment.y, box, box);
+                
+                // Zeichne die Augen der Ziege
+                if (index === 0) {
                     ctx.fillStyle = 'white';
                     ctx.beginPath();
-                    ctx.arc(snake[i].x + box / 4, snake[i].y + box / 4, box / 6, 0, Math.PI * 2);
+                    ctx.arc(segment.x + box / 4, segment.y + box / 4, box / 6, 0, Math.PI * 2);
                     ctx.fill();
 
                     ctx.beginPath();
-                    ctx.arc(snake[i].x + 3 * box / 4, snake[i].y + box / 4, box / 6, 0, Math.PI * 2);
+                    ctx.arc(segment.x + 3 * box / 4, segment.y + box / 4, box / 6, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // Zeichne Pupillen
-                    const eyeOffset = box / 12;
-                    const eyeSize = box / 12;
-
+                    // Zeichne die Pupillen der Ziege
                     ctx.fillStyle = 'black';
                     ctx.beginPath();
-                    ctx.arc(snake[i].x + box / 4 + eyeOffset * Math.cos(direction === 'LEFT' ? Math.PI : direction === 'RIGHT' ? 0 : direction === 'UP' ? -Math.PI / 2 : Math.PI / 2), snake[i].y + box / 4 + eyeOffset * Math.sin(direction === 'LEFT' ? Math.PI : direction === 'RIGHT' ? 0 : direction === 'UP' ? -Math.PI / 2 : Math.PI / 2), eyeSize, 0, Math.PI * 2);
+                    ctx.arc(segment.x + box / 4, segment.y + box / 4, box / 12, 0, Math.PI * 2);
                     ctx.fill();
 
                     ctx.beginPath();
-                    ctx.arc(snake[i].x + 3 * box / 4 + eyeOffset * Math.cos(direction === 'LEFT' ? Math.PI : direction === 'RIGHT' ? 0 : direction === 'UP' ? -Math.PI / 2 : Math.PI / 2), snake[i].y + box / 4 + eyeOffset * Math.sin(direction === 'LEFT' ? Math.PI : direction === 'RIGHT' ? 0 : direction === 'UP' ? -Math.PI / 2 : Math.PI / 2), eyeSize, 0, Math.PI * 2);
+                    ctx.arc(segment.x + 3 * box / 4, segment.y + box / 4, box / 12, 0, Math.PI * 2);
                     ctx.fill();
+
+                    // Zeichne die Ziegenhörner
+                    ctx.strokeStyle = 'saddlebrown';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.moveTo(segment.x + box / 4, segment.y);
+                    ctx.lineTo(segment.x + box / 8, segment.y - box / 2);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.moveTo(segment.x + 3 * box / 4, segment.y);
+                    ctx.lineTo(segment.x + 7 * box / 8, segment.y - box / 2);
+                    ctx.stroke();
                 }
-            }
+            });
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            drawSnake();
+            drawGoat();
 
             ctx.fillStyle = 'red';
             ctx.fillRect(food.x, food.y, box, box);
 
-            let snakeX = snake[0].x;
-            let snakeY = snake[0].y;
+            let goatX = goat[0].x;
+            let goatY = goat[0].y;
 
-            if (direction === 'LEFT') snakeX -= box;
-            if (direction === 'UP') snakeY -= box;
-            if (direction === 'RIGHT') snakeX += box;
-            if (direction === 'DOWN') snakeY += box;
+            if (direction === 'LEFT') goatX -= box;
+            if (direction === 'UP') goatY -= box;
+            if (direction === 'RIGHT') goatX += box;
+            if (direction === 'DOWN') goatY += box;
 
-            if (snakeX === food.x && snakeY === food.y) {
+            if (goatX === food.x && goatY === food.y) {
                 score++;
                 scoreDisplay.textContent = `Punkte: ${score}`;
                 food = {
                     x: Math.floor(Math.random() * 10) * box,
                     y: Math.floor(Math.random() * 10) * box
                 };
-                speed *= 0.95; // Geschwindigkeit erhöhen
+                // Geschwindigkeit langsam erhöhen
+                speed = Math.max(50, speed * 0.95); // Mindestgeschwindigkeit von 50ms
                 clearInterval(game);
                 game = setInterval(draw, speed);
                 speedDisplay.textContent = Math.round(speed);
             } else {
-                snake.pop();
+                goat.pop();
             }
 
-            let newHead = { x: snakeX, y: snakeY };
+            const newHead = { x: goatX, y: goatY };
 
-            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
+            if (goatX < 0 || goatY < 0 || goatX >= canvas.width || goatY >= canvas.height || collision(newHead, goat)) {
                 clearInterval(game);
                 saveHighscore();
                 gameOverDisplay.style.display = 'block';
                 respawnButton.style.display = 'block';
             }
 
-            snake.unshift(newHead);
+            goat.unshift(newHead);
         }
 
         document.addEventListener('keydown', setDirection);
