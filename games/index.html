@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Spiel</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            font-family: 'Changa one', sans-serif;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        #score {
+            font-size: 24px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #highscore {
+            font-size: 24px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        #speedControl {
+            font-size: 18px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        #speedSlider {
+            width: 200px;
+            margin-top: 10px;
+        }
+        #gameOver {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 20px 40px;
+            border-radius: 10px;
+            display: none;
+        }
+        #respawnButton {
+            font-size: 24px;
+            color: #fff;
+            background-color: #e74c3c;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;
+        }
+        #respawnButton:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div id="score">Punkte: 0</div>
+    <div id="highscore">Highscore: 0</div>
+    <div id="speedControl">
+        Geschwindigkeit: <span id="speedDisplay">150</span> ms
+        <input type="range" id="speedSlider" min="50" max="300" step="10" value="150">
+    </div>
+    <div id="gameOver">Game Over</div>
+    <button id="respawnButton">Neustart</button>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('score');
+        const highscoreDisplay = document.getElementById('highscore');
+        const gameOverDisplay = document.getElementById('gameOver');
+        const respawnButton = document.getElementById('respawnButton');
+        const speedDisplay = document.getElementById('speedDisplay');
+        const speedSlider = document.getElementById('speedSlider');
+        const box = 40;
+        let snake, food, score, direction, game, speed, highscore;
+
+        function getRandomGreenColor() {
+            // Generiert eine zufällige grüne Farbe
+            const green = Math.floor(Math.random() * 128) + 128; // Bereich von 128 bis 255
+            return `rgb(0, ${green}, 0)`;
+        }
+
+        function loadHighscore() {
+            highscore = localStorage.getItem('highscore') || 0;
+            highscoreDisplay.textContent = `Highscore: ${highscore}`;
+        }
+
+        function saveHighscore() {
+            if (score > highscore) {
+                highscore = score;
+                localStorage.setItem('highscore', highscore);
+                highscoreDisplay.textContent = `Highscore: ${highscore}`;
+            }
+        }
+
+        function init() {
+            snake = [{ x: 4 * box, y: 5 * box }];
+            food = { x: Math.floor(Math.random() * 10) * box, y: Math.floor(Math.random() * 10) * box };
+            score = 0;
+            direction = null;
+            speed = parseInt(speedSlider.value, 10);
+            scoreDisplay.textContent = `Punkte: ${score}`;
+            speedDisplay.textContent = speed;
+            gameOverDisplay.style.display = 'none';
+            respawnButton.style.display = 'none';
+            loadHighscore();
+            clearInterval(game);
+            game = setInterval(draw, speed);
+        }
+
+        function setDirection(event) {
+            if (event.keyCode === 37 && direction !== 'RIGHT') {
+                direction = 'LEFT';
+            } else if (event.keyCode === 38 && direction !== 'DOWN') {
+                direction = 'UP';
+            } else if (event.keyCode === 39 && direction !== 'LEFT') {
+                direction = 'RIGHT';
+            } else if (event.keyCode === 40 && direction !== 'UP') {
+                direction = 'DOWN';
+            }
+        }
+
+        function collision(head, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (head.x === array[i].x && head.y === array[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function drawSnake() {
+            ctx.strokeStyle = 'black';
+            for (let i = 0; i < snake.length; i++) {
+                // Setzt unterschiedliche Farben für jedes Segment
+                ctx.fillStyle = (i === 0) ? 'green' : getRandomGreenColor();
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+                ctx.lineJoin = 'round';
+
+                if (i === 0) { // Zeichnet die Augen für den Kopf
+                    // Zeichne Augen
+                    ctx.fillStyle = 'white';
+                    ctx.beginPath();
+                    ctx.arc(snake[i].x + box / 4, snake[i].y + box / 4, box / 6, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(snake[i].x + 3 * box / 4, snake[i].y + box / 4, box / 6, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Zeichne Pupillen
+                    const eyeOffset = box / 12;
+                    const eyeSize = box / 12;
+
+                    ctx.fillStyle = 'black';
+                    ctx.beginPath();
+                    ctx.arc(snake[i].x + box / 4 + eyeOffset * Math.cos(direction === 'LEFT' ? Math.PI : direction === 'RIGHT' ? 0 : direction === 'UP' ? -Math.PI / 2 : Math.PI / 2), snake[i].y + box / 4 + eyeOffset * Math.sin(direction === 'LEFT' ? Math.PI : direction === 'RIGHT' ? 0 : direction === 'UP' ? -Math.PI / 2 : Math.PI / 2), eyeSize, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(snake[i].x + 3 * box / 4 + eyeOffset * Math.cos(direction === 'LEFT' ? Math.PI : direction === 'RIGHT' ? 0 : direction === 'UP' ? -Math.PI / 2 : Math.PI / 2), snake[i].y + box / 4 + eyeOffset * Math.sin(direction === 'LEFT' ? Math.PI : direction === 'RIGHT' ? 0 : direction === 'UP' ? -Math.PI / 2 : Math.PI / 2), eyeSize, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawSnake();
+
+            ctx.fillStyle = 'red';
+            ctx.fillRect(food.x, food.y, box, box);
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            if (direction === 'LEFT') snakeX -= box;
+            if (direction === 'UP') snakeY -= box;
+            if (direction === 'RIGHT') snakeX += box;
+            if (direction === 'DOWN') snakeY += box;
+
+            if (snakeX === food.x && snakeY === food.y) {
+                score++;
+                scoreDisplay.textContent = `Punkte: ${score}`;
+                food = {
+                    x: Math.floor(Math.random() * 10) * box,
+                    y: Math.floor(Math.random() * 10) * box
+                };
+                speed *= 0.95; // Geschwindigkeit erhöhen
+                clearInterval(game);
+                game = setInterval(draw, speed);
+                speedDisplay.textContent = Math.round(speed);
+            } else {
+                snake.pop();
+            }
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(game);
+                saveHighscore();
+                gameOverDisplay.style.display = 'block';
+                respawnButton.style.display = 'block';
+            }
+
+            snake.unshift(newHead);
+        }
+
+        document.addEventListener('keydown', setDirection);
+        respawnButton.addEventListener('click', init);
+        speedSlider.addEventListener('input', () => {
+            speed = parseInt(speedSlider.value, 10);
+            speedDisplay.textContent = speed;
+            clearInterval(game);
+            game = setInterval(draw, speed);
+        });
+
+        init();
+    </script>
+</body>
+</html>
