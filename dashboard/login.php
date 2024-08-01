@@ -1,6 +1,6 @@
 <?php
 session_start(); // Starten der Session
-require 'connection.php'; // Einbinden der Datenbankverbindung
+// require 'connection.php'; // Einbinden der Datenbankverbindung
 
 // Fehleranzeige aktivieren
 ini_set('display_errors', 1);
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOAT Services | Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loginstyle.css">
     <link rel="shortcut icon" href="../assets/services.png" type="image/x-icon">
 </head>
 <body>
@@ -72,10 +72,12 @@ if (isset($_POST['submit'])) {
             <!-- Link zum Erstellen eines neuen Accounts -->
             <a href="index.php">Account erstellen!</a>
             <!-- Anzeige der Fehlermeldung, falls vorhanden -->
-            <?php if (!empty($errorMessage)): ?>
+            <!-- <?php if (!empty($errorMessage)): ?>
                 <div class="error-message"><?php echo htmlspecialchars($errorMessage); ?></div>
             <?php endif; ?>
+            -->
         </form>
     </div>
 </body>
 </html>
+
