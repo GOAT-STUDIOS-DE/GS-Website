@@ -7,12 +7,13 @@ li, a, button{
 }
 header{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    padding: 30px 10%;
+    padding: 30px 5%;
 }
 .logo{
     cursor: pointer;
+    margin-right: auto;
     font-weight: 600;
     color: #edf0f1;
 }
@@ -46,15 +47,26 @@ header{
     opacity: 1; /* Auf volle Sichtbarkeit ändern */
 }
 
-button{
+.button{
     padding: 13px 25px;
-    font-weight: 700;
+    font-weight: 400;
     background-color: #2270E2;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.4s ease 0s;
 }
+button{
+    padding: 13px 25px;
+    font-weight: 400;
+    background-color: transparent;
+    border-width: 3px;
+    border-color: #2270E2;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.4s ease 0s; 
+}
 button:hover{
-    background-color: #222222;
+    background-color: #1c1c1c;
+        border-color: #2270c9;
 }
