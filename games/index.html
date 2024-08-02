@@ -16,6 +16,10 @@
             font-family: 'Comic Sans', cursive;
             color: #333;
             overflow: hidden;
+            background: linear-gradient(to bottom, #272727, #808080); /* Grau zu helleres Grau Verlauf */
+    background-color: #808080;
+    background-size: 100% 100vh; /* Die Größe des Hintergrunds auf 100% der Breite und 100vh der Höhe setzen */
+    background-repeat: no-repeat; /* Verhindert das Wiederholen des Hintergrunds */
         }
 
         .background {
@@ -24,7 +28,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: white;
             z-index: -1;
             background-size: 40px 40px;
         }
@@ -111,9 +114,9 @@
         <nav>
             <ul class="nav__links">
                 <li><a href="#">Services</a></li>
-                <li><a href="#">Socials</a></li>
-                <li><a href="/games">Mini Games</a></li>
-                <li><a href="#" class="current">Contact</a></li>
+                <li><a href="../socials.html">Socials</a></li>
+                <li><a href="/games" class="current">Mini Games</a></li>
+                <li><a href="../contact.html">Contact</a></li>
             </ul>
         </nav>
         <button onclick="window.location.href='/dashboard/login.php'" >
