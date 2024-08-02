@@ -110,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOAT Services | Registrieren</title>
-    <link rel="stylesheet" href="loginstyle.css">
+    <link rel="stylesheet" href="registerstyle.css">
     <link rel="shortcut icon" href="../assets/services.png" type="image/x-icon">
 
     <script type="text/javascript">
@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" placeholder="Passwort" name="password" autocomplete="off" class="input-box-3" required>
                 <button class="submit-btn" type="submit">Erstellen</button>
             </div>
-            <a href="login.php">Bereits einen Account?</a>
+            <a href="login.php" id="register_text">Bereits einen Account?</a>
             <?php if (!empty($alertMessage)): ?>
                 <div class="error-message"><?php echo htmlspecialchars($alertMessage); ?></div>
             <?php endif; ?>
