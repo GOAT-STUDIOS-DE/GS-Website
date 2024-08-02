@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ziegen Spiel</title>
+    <link rel="stylesheet" href="../css/navbar.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
         body {
             display: flex;
             flex-direction: column;
@@ -14,12 +13,11 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Comic Sans', cursive;
             color: #333;
             overflow: hidden;
         }
 
-        /* Retro Pixelated Background */
         .background {
             position: absolute;
             top: 0;
@@ -37,23 +35,36 @@
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
-        #score, #highscore, #speedControl {
+
+        #score, #highscore, #speedControl, #hornControl, #mustacheControl, #colorPickerControl {
             font-size: 24px;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.7);
+            color: #313131;
             padding: 12px 24px;
             border-radius: 8px;
             margin-bottom: 16px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
-        #speedControl {
-            font-size: 22px;
+
+        #score { color: #ff0000; }
+        #highscore { color: #6a00ff; }
+        #speedControl { font-size: 22px; color: #ffeb3b; }
+        #speedSlider { width: 180px; margin-top: 8px; }
+        #hornControl p, #mustacheControl p {
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        #hornControl p.active, #mustacheControl p.active {
             color: #ffeb3b;
         }
-        #speedSlider {
-            width: 180px;
+        #colorPickerControl {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        #colorPickerControl input[type="color"] {
             margin-top: 8px;
+            cursor: pointer;
         }
         #gameOver {
             position: absolute;
@@ -85,19 +96,50 @@
         #respawnButton:hover {
             background-color: #c0392b;
         }
+
+        .cosmetics {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+        }
     </style>
 </head>
 <body>
+    <header>
+        <!-- <img class="logo" src="img/logo.svg" alt="logo"> -->
+        <p class="logo">GOAT Services</p>
+        <nav>
+            <ul class="nav__links">
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Socials</a></li>
+                <li><a href="/games">Mini Games</a></li>
+                <li><a href="#" class="current">Contact</a></li>
+            </ul>
+        </nav>
+        <button onclick="window.location.href='/dashboard/login.php'" >
+            Login / Sign Up
+        </button>
+        
+    </header>
     <div class="background"></div>
     <div id="score">Punkte: 0</div>
     <div id="highscore">Highscore: 0</div>
-    <div id="speedControl">
-        Geschwindigkeit: <span id="speedDisplay">150</span> ms
-        <input type="range" id="speedSlider" min="50" max="300" step="10" value="150">
-    </div>
     <div id="gameOver">Game Over</div>
     <button id="respawnButton">Neustart</button>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div class="cosmetics">
+        <div id="hornControl">
+            <p id="hornToggle">Hörner: An</p>
+        </div>
+        <div id="mustacheControl">
+            <p id="mustacheToggle">Bart: Aus</p>
+        </div>
+        <div id="colorPickerControl">
+            <p>Farbe:</p>
+            <input type="color" id="colorPicker" value="#00FF00">
+        </div>
+    </div>
+
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -105,13 +147,45 @@
         const highscoreDisplay = document.getElementById('highscore');
         const gameOverDisplay = document.getElementById('gameOver');
         const respawnButton = document.getElementById('respawnButton');
-        const speedDisplay = document.getElementById('speedDisplay');
-        const speedSlider = document.getElementById('speedSlider');
+        const hornToggle = document.getElementById('hornToggle');
+        const mustacheToggle = document.getElementById('mustacheToggle');
+        const colorPicker = document.getElementById('colorPicker');
         const box = 40;
         let goat, food, score, direction, game, speed, highscore;
+        let showHorns = true;
+        let showMustache = false;
+        let goatColor = '#00FF00'; // Standardfarbe der Ziege
 
         function getRandomColor() {
             return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+        }
+
+        function loadSettings() {
+            // Laden der Einstellungen aus dem Local Storage
+            const storedHorns = localStorage.getItem('showHorns');
+            const storedMustache = localStorage.getItem('showMustache');
+            const storedColor = localStorage.getItem('goatColor');
+
+            if (storedHorns !== null) {
+                showHorns = JSON.parse(storedHorns);
+            }
+            if (storedMustache !== null) {
+                showMustache = JSON.parse(storedMustache);
+            }
+            if (storedColor !== null) {
+                goatColor = storedColor;
+            }
+
+            hornToggle.textContent = `Hörner: ${showHorns ? 'An' : 'Aus'}`;
+            mustacheToggle.textContent = `Bart: ${showMustache ? 'An' : 'Aus'}`;
+            colorPicker.value = goatColor;
+        }
+
+        function saveSettings() {
+            // Speichern der aktuellen Einstellungen im Local Storage
+            localStorage.setItem('showHorns', JSON.stringify(showHorns));
+            localStorage.setItem('showMustache', JSON.stringify(showMustache));
+            localStorage.setItem('goatColor', goatColor);
         }
 
         function loadHighscore() {
@@ -132,12 +206,12 @@
             food = { x: Math.floor(Math.random() * 10) * box, y: Math.floor(Math.random() * 10) * box };
             score = 0;
             direction = null;
-            speed = parseInt(speedSlider.value, 10);
+            speed = 150; // Startgeschwindigkeit
             scoreDisplay.textContent = `Punkte: ${score}`;
-            speedDisplay.textContent = speed;
             gameOverDisplay.style.display = 'none';
             respawnButton.style.display = 'none';
             loadHighscore();
+            loadSettings(); // Lade die gespeicherten Einstellungen
             if (game) {
                 clearInterval(game);
             }
@@ -146,13 +220,13 @@
 
         function setDirection(event) {
             const { keyCode } = event;
-            if ((keyCode === 37 || keyCode === 65) && direction !== 'RIGHT') { // Left arrow or 'A'
+            if ((keyCode === 37 || keyCode === 65) && direction !== 'RIGHT') {
                 direction = 'LEFT';
-            } else if ((keyCode === 38 || keyCode === 87) && direction !== 'DOWN') { // Up arrow or 'W'
+            } else if ((keyCode === 38 || keyCode === 87) && direction !== 'DOWN') {
                 direction = 'UP';
-            } else if ((keyCode === 39 || keyCode === 68) && direction !== 'LEFT') { // Right arrow or 'D'
+            } else if ((keyCode === 39 || keyCode === 68) && direction !== 'LEFT') {
                 direction = 'RIGHT';
-            } else if ((keyCode === 40 || keyCode === 83) && direction !== 'UP') { // Down arrow or 'S'
+            } else if ((keyCode === 40 || keyCode === 83) && direction !== 'UP') {
                 direction = 'DOWN';
             }
         }
@@ -163,44 +237,76 @@
 
         function drawGoat() {
             goat.forEach((segment, index) => {
-                ctx.fillStyle = index === 0 ? 'white' : getRandomColor();
+                ctx.fillStyle = index === 0 ? goatColor : getRandomColor();
                 ctx.strokeStyle = 'black';
                 ctx.fillRect(segment.x, segment.y, box, box);
                 ctx.strokeRect(segment.x, segment.y, box, box);
-                
-                // Zeichne die Augen der Ziege
+
                 if (index === 0) {
+                    // Berechnung der Pupillenposition
+                    let pupilXOffset = 0;
+                    let pupilYOffset = 0;
+                    if (direction === 'LEFT') {
+                        pupilXOffset = -box / 8;
+                    } else if (direction === 'RIGHT') {
+                        pupilXOffset = box / 8;
+                    } else if (direction === 'UP') {
+                        pupilYOffset = -box / 8;
+                    } else if (direction === 'DOWN') {
+                        pupilYOffset = box / 8;
+                    }
+
+                    // Zeichne Augen
                     ctx.fillStyle = 'white';
                     ctx.beginPath();
-                    ctx.arc(segment.x + box / 4, segment.y + box / 4, box / 6, 0, Math.PI * 2);
+                    ctx.arc(segment.x + box / 4 + box / 8, segment.y + box / 4 + box / 8, box / 8, 0, Math.PI * 2);
                     ctx.fill();
 
-                    ctx.beginPath();
-                    ctx.arc(segment.x + 3 * box / 4, segment.y + box / 4, box / 6, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Zeichne die Pupillen der Ziege
                     ctx.fillStyle = 'black';
                     ctx.beginPath();
-                    ctx.arc(segment.x + box / 4, segment.y + box / 4, box / 12, 0, Math.PI * 2);
+                    ctx.arc(segment.x + box / 4 + box / 8 + pupilXOffset, segment.y + box / 4 + box / 8 + pupilYOffset, box / 16, 0, Math.PI * 2);
                     ctx.fill();
 
+                    // Auge 2
+                    ctx.fillStyle = 'white';
                     ctx.beginPath();
-                    ctx.arc(segment.x + 3 * box / 4, segment.y + box / 4, box / 12, 0, Math.PI * 2);
+                    ctx.arc(segment.x + 3 * box / 4 + box / 8, segment.y + box / 4 + box / 8, box / 8, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // Zeichne die Ziegenhörner
-                    ctx.strokeStyle = 'saddlebrown';
-                    ctx.lineWidth = 4;
+                    ctx.fillStyle = 'black';
                     ctx.beginPath();
-                    ctx.moveTo(segment.x + box / 4, segment.y);
-                    ctx.lineTo(segment.x + box / 8, segment.y - box / 2);
-                    ctx.stroke();
+                    ctx.arc(segment.x + 3 * box / 4 + box / 8 + pupilXOffset, segment.y + box / 4 + box / 8 + pupilYOffset, box / 16, 0, Math.PI * 2);
+                    ctx.fill();
 
-                    ctx.beginPath();
-                    ctx.moveTo(segment.x + 3 * box / 4, segment.y);
-                    ctx.lineTo(segment.x + 7 * box / 8, segment.y - box / 2);
-                    ctx.stroke();
+                    if (showHorns) {
+                        ctx.strokeStyle = 'saddlebrown';
+                        ctx.lineWidth = 4;
+                        ctx.beginPath();
+                        ctx.moveTo(segment.x + box / 4, segment.y);
+                        ctx.lineTo(segment.x + box / 8, segment.y - box / 2);
+                        ctx.stroke();
+
+                        ctx.beginPath();
+                        ctx.moveTo(segment.x + 3 * box / 4, segment.y);
+                        ctx.lineTo(segment.x + 7 * box / 8, segment.y - box / 2);
+                        ctx.stroke();
+                    }
+
+                    if (showMustache) {
+                        ctx.strokeStyle = 'black';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.arc(segment.x + box / 2, segment.y + 3 * box / 4, box / 2, 0, Math.PI, true);
+                        ctx.stroke();
+
+                        ctx.beginPath();
+                        ctx.arc(segment.x + box / 3, segment.y + 5 * box / 6, box / 4, 0, Math.PI, false);
+                        ctx.stroke();
+
+                        ctx.beginPath();
+                        ctx.arc(segment.x + 2 * box / 3, segment.y + 5 * box / 6, box / 4, 0, Math.PI, false);
+                        ctx.stroke();
+                    }
                 }
             });
         }
@@ -227,11 +333,9 @@
                     x: Math.floor(Math.random() * 10) * box,
                     y: Math.floor(Math.random() * 10) * box
                 };
-                // Geschwindigkeit langsam erhöhen
-                speed = Math.max(50, speed * 0.95); // Mindestgeschwindigkeit von 50ms
+                speed = Math.max(50, speed * 0.95);
                 clearInterval(game);
                 game = setInterval(draw, speed);
-                speedDisplay.textContent = Math.round(speed);
             } else {
                 goat.pop();
             }
@@ -250,11 +354,19 @@
 
         document.addEventListener('keydown', setDirection);
         respawnButton.addEventListener('click', init);
-        speedSlider.addEventListener('input', () => {
-            speed = parseInt(speedSlider.value, 10);
-            speedDisplay.textContent = speed;
-            clearInterval(game);
-            game = setInterval(draw, speed);
+        hornToggle.addEventListener('click', () => {
+            showHorns = !showHorns;
+            hornToggle.textContent = `Hörner: ${showHorns ? 'An' : 'Aus'}`;
+            saveSettings();
+        });
+        mustacheToggle.addEventListener('click', () => {
+            showMustache = !showMustache;
+            mustacheToggle.textContent = `Bart: ${showMustache ? 'An' : 'Aus'}`;
+            saveSettings();
+        });
+        colorPicker.addEventListener('input', (event) => {
+            goatColor = event.target.value;
+            saveSettings();
         });
 
         init();
