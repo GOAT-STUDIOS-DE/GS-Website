@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collect the Gems</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background: #f0f0f0;
+            border: 2px solid #000;
+        }
+        #game-screen, #battle-screen {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-screen">
+        <canvas id="gameCanvas" width="600" height="600"></canvas>
+    </div>
+    <div id="battle-screen">
+        <h1>Battle!</h1>
+        <p>Choose your action:</p>
+        <button id="attack-button">Attack</button>
+        <button id="run-button">Run</button>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
