@@ -26,6 +26,7 @@ function registerUser($username, $email, $password) {
     $stmt->bindParam(":email", $email);
     $stmt->bindParam(":password", $password);
     $stmt->execute();
+    return $con->lastInsertId();
 }
 
 $alertMessage = "";
@@ -50,9 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userExists = $stmt->fetch();
 
         if (!$userExists) {
-            registerUser($username, $email, $password);
-            header("Location: chat.php");
+            $user_id = registerUser($username, $email, $password);
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['username'] = $username;
+            $_SESSION['email'] = $email;
 
+            header("Location: chat.php");
             exit();
         } else {
             $alertMessage = "Benutzername oder E-Mail existiert bereits.";
@@ -66,7 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOAT Services | Registrieren</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="../assets/services.png" type="image/x-icon">
 
     <script type="text/javascript">
@@ -93,5 +96,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
         </form>
     </div>
-</body>
-</html>
+</body

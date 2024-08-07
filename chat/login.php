@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     $password = $_POST['password'];
 
     try {
-        $stmt = $con->prepare('SELECT username, email, password, is_developer FROM users WHERE username=:username OR email=:email');
+        $stmt = $con->prepare('SELECT id, username, email, password, is_developer FROM users WHERE username=:username OR email=:email');
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $username);
         $stmt->execute();
@@ -24,6 +24,7 @@ if (isset($_POST['submit'])) {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['is_developer'] = $user['is_developer'];
+                $_SESSION['user_id'] = $user['id']; // Benutzer-ID zur Sitzung hinzufügen
 
                 if (isset($_POST['remember_me'])) {
                     $token = bin2hex(random_bytes(16));
@@ -41,7 +42,7 @@ if (isset($_POST['submit'])) {
                         'samesite' => 'Strict'
                     ]);
                 }
-                
+
                 header('Location: chat.php');
                 exit;
             } else {
@@ -62,7 +63,6 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MESSAGING APP | Login</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="../assets/services.png" type="image/x-icon">
 </head>
 <body>
