@@ -34,3 +34,21 @@ h2 {
     margin: 10px 0;
     color: #fff; /* Textfarbe auf Weiß setzen */
 }
+.pfp{
+    width: 40px;
+    height: 40px;
+    border-radius: 33px;
+    display: flex;
+    align-self: center;
+}
+.upper-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px;
+}
+.upper-container h1{
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+}

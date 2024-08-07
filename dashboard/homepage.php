@@ -23,6 +23,8 @@ if (!isset($_SESSION['username'])) {
 </head>
 <body>
        
+<div class="upper-container">
+    <img src="" alt="" class="pfp">
 <h1>
     <?php if(isset($_SESSION['is_developer']) && $_SESSION['is_developer']): ?>
         <div id="developerBadge" style="display: inline-block; background-image: url('../assets/dev-badge.png'); background-size: contain; background-repeat: no-repeat; padding-left: 50px; background-position: 10px center;">GOAT Services</div>
@@ -31,6 +33,7 @@ if (!isset($_SESSION['username'])) {
         <div id="developerBadge">GOAT Services</div>
     <?php endif;?>
 </h1>
+</div>
 
 <div class="container mt-4">
     <div class="main-content">
