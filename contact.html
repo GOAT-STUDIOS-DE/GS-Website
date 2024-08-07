@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/contactstyle.css">    
     <link rel="stylesheet" href="css/buttons.css">
     <link rel="stylesheet" href="css/navbar.css">
+
+    <script src="js/contactscript.js" defer></script>
 </head>
 <body>
     <header>
@@ -23,7 +25,6 @@
         <button onclick="window.location.href='/dashboard/login.php'" >
             Login / Sign Up
         </button>
-        
     </header>
     <section id="uppersection">
         <h1>Contact Us</h1>
@@ -31,23 +32,22 @@
             <div class="section1">
                 <div class="text-container-p">
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias, necessitatibus laboriosam expedita nulla eveniet unde saepe eum.</p>
-                
                 </div>
                 <div class="input-container-1">
                     <div class="input1">
                         <h2>Your Name*</h2>
-                        <input type="text">
+                        <input type="text" id="name">
                     </div>
                     <div class="input2">
                         <h2>Your Email*</h2>
-                        <input type="email">
+                        <input type="email" id="email">
                     </div>
                 </div>
             </div>
             <div class="section2">
                 <div class="input3">
                     <h2>Reason for Contact</h2>
-                    <select name="" id="">
+                    <select name="" id="reason">
                         <option value class="hidden">Please select</option>
                         <option value="general">General</option>
                         <option value="support">Support</option>
@@ -60,9 +60,9 @@
             </div>
             <div class="section3">
                 <h2>Your Message</h2>
-                <input type="text" class="input_big">
+                <input type="text" class="input_big" id="message">
             </div>
-            <a href="" class="send-btn">Send Message</a>
+            <a href="#" class="send-btn" id="sendButton">Send Message</a>
         </div>
     </section>
 </body>

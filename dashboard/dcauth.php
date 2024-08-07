@@ -1,22 +1,29 @@
 <?php
-// Start the session to manage user authentication state
+// Starten der Session, um den Benutzerstatus zu verwalten
 session_start();
 
-// Include the configuration file which contains constants like CLIENT_ID and REDIRECT_URI
-require_once('config.php');
-
-// Check if the 'username' session variable is set, meaning the user is logged in
+// Überprüfen, ob der Benutzer eingeloggt ist
 if (!isset($_SESSION['username'])) {
-    // If the user is not logged in, redirect them to the login page (index.php)
+    // Wenn der Benutzer nicht eingeloggt ist, weiterleiten zur Login-Seite
     header("Location: index.php");
-    exit(); // Exit to ensure no further code is executed
+    exit();
 }
 
-// Define the scope of permissions to request from Discord
-$scope = "identify"; // Initial scope can be expanded as needed
+// Konfigurationsdatei einbinden
+require_once('config.php');
+
+// Überprüfen, ob der Benutzer bereits mit Discord verknüpft ist
+if (isset($_SESSION['discord_connected']) && $_SESSION['discord_connected']) {
+    // Wenn der Benutzer bereits verknüpft ist, zur Dashboard-Seite weiterleiten
+    header("Location: /dashboard/settings.php");
+    exit();
+}
+
+// Definieren des OAuth2-Scopes
+$scope = "identify"; // Die Berechtigungen können nach Bedarf erweitert werden
 $auth_url = "https://discord.com/oauth2/authorize?client_id=" . CLIENT_ID . "&response_type=code&redirect_uri=" . urlencode(REDIRECT_URI) . "&scope=identify+email+connections+guilds+guilds.join+gdm.join";
 
-// Redirect the user to Discord's OAuth2 authorization page
+// Weiterleiten des Benutzers zur Discord-OAuth2-Autorisierungsseite
 header("Location: $auth_url");
-exit(); // Exit to ensure the redirect happens immediately
+exit(); // Sicherstellen, dass der Code nach der Weiterleitung nicht weiter ausgeführt wird
 ?>

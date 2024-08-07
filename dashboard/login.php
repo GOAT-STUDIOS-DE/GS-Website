@@ -1,6 +1,7 @@
 <?php
 session_start(); // Starten der Session
-// require 'connection.php'; // Einbinden der Datenbankverbindung
+
+require 'connection.php'; // Einbinden der Datenbankverbindung
 
 // Fehleranzeige aktivieren
 ini_set('display_errors', 1);
