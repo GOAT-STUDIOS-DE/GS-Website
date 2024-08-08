@@ -1,3 +1,4 @@
+
 document.getElementById('profileImage').addEventListener('click', function() {
     const dropdown = document.getElementById('dropdownMenu');
     // Toggle der Klasse 'show'

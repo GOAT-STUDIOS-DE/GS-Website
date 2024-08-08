@@ -14,7 +14,8 @@ if (!isset($_SESSION['discord_connected']) || !$_SESSION['discord_connected']) {
 } else {
     // Wenn der Benutzer verknüpft ist, Schlüssel anzeigen
     $showKey = true;
-    $file = '/var/www/goat-services.de/html/discordpages/keys.txt';
+    $keyFile = '/var/www/goat-services.de/html/discordpages/keys.txt';
+    $userKeyFile = '/var/www/goat-services.de/html/discordpages/user_keys.txt';
 
     // Funktion, um einen zufälligen Schlüssel zu erhalten
     function getRandomKey($file) {
@@ -32,8 +33,27 @@ if (!isset($_SESSION['discord_connected']) || !$_SESSION['discord_connected']) {
         return $keys[array_rand($keys)];
     }
 
-    if (!isset($_SESSION['key'])) {
-        $_SESSION['key'] = getRandomKey($file);
+    // Überprüfen, ob der Benutzer bereits einen Schlüssel hat
+    $username = $_SESSION['username'];
+    $userKeys = file($userKeyFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    $userKey = null;
+
+    foreach ($userKeys as $line) {
+        list($storedUsername, $storedKey) = explode(':', $line);
+        if ($storedUsername === $username) {
+            $userKey = $storedKey;
+            break;
+        }
+    }
+
+    if ($userKey === null) {
+        // Kein Schlüssel gefunden, also neuen Schlüssel vergeben
+        $newKey = getRandomKey($keyFile);
+        file_put_contents($userKeyFile, "$username:$newKey\n", FILE_APPEND);
+        $_SESSION['key'] = $newKey;
+    } else {
+        // Schlüssel gefunden, setzen
+        $_SESSION['key'] = $userKey;
     }
 }
 ?>
@@ -48,11 +68,12 @@ if (!isset($_SESSION['discord_connected']) || !$_SESSION['discord_connected']) {
 </head>
 <body>
     <h1><a href="dcauth.php">Connect via Discord</a></h1>
+    <h1><a href="change_password.php">Passwort ändern</a></h1>
     <h1><a href="https://goat-services.de/dashboard/homepage.php">Zurück</a></h1>
     
     <?php if ($showKey): ?>
         <div>
-            <p><strong>Du hast jetzt einen Schlüssel für den Bot „GS | Profile Management“ auf dem offiziellen GOAT Services Discord-Server. Verwende den Befehl /create &lt;key&gt;, wobei du &lt;key&gt; durch den dir zugewiesenen Schlüssel ersetzt. Viel Spaß mit deiner eigenen GOAT Services Profilseite!</strong></p>
+            <p><strong>Du hast jetzt einen Schlüssel für den Bot „GS | Profile Management“ auf dem offiziellen <a href="https://goat-services.de/discord">GOAT Services</a> Discord-Server. Verwende den Befehl /create &lt;key&gt;, wobei du &lt;key&gt; durch den dir zugewiesenen Schlüssel ersetzt. Viel Spaß mit deiner eigenen GOAT Services Profilseite!</strong></p>
             <p><strong>Dein Schlüssel:</strong> <?= htmlspecialchars($_SESSION['key']) ?></p>
         </div>
     <?php else: ?>
