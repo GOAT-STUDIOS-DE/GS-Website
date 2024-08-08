@@ -12,5 +12,5 @@ goat-services.de
 
 #### Was sind die besten Founder die es geben kann?
 
-Silas.dev & Bl4ckye.dev
+silas.dev & bl4ckye.dev
 
