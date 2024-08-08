@@ -91,7 +91,7 @@ body {
     cursor: pointer;
 }
 .texts-ct {
-    margin-left: 17%;
+    margin-left: 5%;
     display: grid;
     grid-template-columns: 150px auto; /* Spalten für Labels und Werte */
     gap: 10px; /* Abstand zwischen Spalten */
