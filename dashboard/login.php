@@ -71,7 +71,8 @@ if (isset($_POST['submit'])) {
                 <button class="submit-btn" type="submit" name="submit">Login</button>
             </div>
             <!-- Link zum Erstellen eines neuen Accounts -->
-            <a href="index.php">Account erstellen!</a>
+            <a href="#">Passwort vergessen?</a>
+            <a href="index.php" class="create_acc">Account erstellen!</a>
             <!-- Anzeige der Fehlermeldung, falls vorhanden -->
             <!-- <?php if (!empty($errorMessage)): ?>
                 <div class="error-message"><?php echo htmlspecialchars($errorMessage); ?></div>
