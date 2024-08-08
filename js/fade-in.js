@@ -9,4 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
             element.classList.remove('hidden');
         }, index * 150);
     });
+
+    // Überprüfen, ob Discord verlinkt ist
+    const overlayText = document.querySelector('.overlay-text');
+    if (overlayText && overlayText.getAttribute('data-discord-linked') === 'true') {
+        const notLinkedBox = document.getElementById('notlinked');
+        if (notLinkedBox) {
+            notLinkedBox.id = ''; // ID entfernen
+        }
+    }
 });
