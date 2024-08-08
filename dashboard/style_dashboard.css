@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* Allgemeine Stile für alle Bildschirmgrößen */
 body {
     font-family: 'Poppins';
     background: linear-gradient(to bottom, #272727, #808080);
@@ -10,6 +11,7 @@ body {
     padding: 0;
     color: #fff;
 }
+
 /* Keyframes für die Einblend-Animation */
 @keyframes fadeIn {
     from {
@@ -28,12 +30,10 @@ body {
     visibility: hidden; /* Versteckt das Element ohne Layout zu beeinflussen */
 }
 
-
 /* Klasse für die Animation */
 .fade-in {
     animation: fadeIn 0.5s ease-out forwards;
 }
-
 
 .container {
     padding: 20px;
@@ -44,19 +44,23 @@ h2 {
     margin: 10px 0;
     color: #fff;
 }
-a{
+
+a {
     color: #2270E2;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s;
 }
-a:hover{
+
+a:hover {
     color: #1953aa;
 }
-.dev.text{
+
+.dev.text {
     color: #12b576cd;
 }
-.pfp{
+
+.pfp {
     width: 40px;
     height: 40px;
     border-radius: 33px;
@@ -65,17 +69,20 @@ a:hover{
     cursor: pointer;
     margin-left: 20px;
 }
-.upper-container{
+
+.upper-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 15px;
 }
-.upper-container h1{
+
+.upper-container h1 {
     flex-grow: 1;
     text-align: center;
     margin: 0;
 }
+
 .profile-container {
     position: relative;
     position: absolute;
@@ -83,7 +90,6 @@ a:hover{
     display: flex;
     align-items: center;
 }
-
 
 .dropdown-menu {
     position: absolute;
@@ -139,13 +145,14 @@ a:hover{
 .dropdown-item:hover {
     color: #2270E2;
 }
+
 #notlinked {
     filter: blur(3px);
     position: relative;
     user-select: none;
 }
 
-.overlay-text{
+.overlay-text {
     position: absolute;
     top: 50%;
     left: 35%;
@@ -156,58 +163,42 @@ a:hover{
     font-weight: 600;
     margin-top: 50px;
 }
-.overlay-text a{
+
+.overlay-text a {
     color: #2270E2;
     text-decoration: none;
     transition: all 0.3s;
 }
-.overlay-text a:hover{
+
+.overlay-text a:hover {
     color: #1953aa;
 }
-/* General Design */
-#section-1 {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Horizontale Zentrierung */
-}
-#section-2{
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Horizontale Zentrierung */
-}
-#section-3{
+
+/* Allgemeine Design */
+#section-1, #section-2, #section-3 {
     width: 100%;
     display: flex;
     justify-content: center; /* Horizontale Zentrierung */
 }
 
-.section-1-ct {
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    justify-content: center;
-}
-.section-2-ct{
+.section-1-ct, .section-2-ct {
     display: flex;
     flex-direction: row;
     width: 90%;
     justify-content: center;
 }
 
-.section-3-ct{
+.section-3-ct {
     display: flex;
     flex-direction: row;
     height: 200px;
 }
-.appliation-ct{
+
+.application-ct, .contact-ct {
     display: flex;
     flex-direction: column;
 }
-.contact-ct{
-    display: flex;
-    flex-direction: column;
-    font-weight: 400;
-}
+
 .box {
     text-align: center;
     background-color: #141414a1;
@@ -218,50 +209,129 @@ a:hover{
     box-shadow: 8px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-
-.box.small{
+.box.small {
     width: 350px;
     height: 250px;
 }
-.box.large{
+
+.box.large {
     width: 350px;
     height: 520px;
 }
-.box.xxl{
+
+.box.xxl {
     width: 730px;
     height: 320px;
 }
-.rest{
+
+.rest {
     height: 100px;
 }
 
-.linked-app{
+.linked-app {
     display: flex;
     text-align: center;
     align-items: center;
     user-select: none;
     cursor: pointer;
 }
-.linked-app p{
+
+.linked-app p {
     padding-left: 10px;
     font-size: 19px;
     color: #00ff9d;
 }
-.linked-app i{
+
+.linked-app i {
     font-size: 40px;
 }
-.linked-app-ct{
+
+.linked-app-ct {
     display: flex;
     justify-content: center;
 }
-.btn-basic{
+
+.btn-basic {
     padding: 20px;
     background-color: #2f8ec9;
-    color: #fff; 
+    color: #fff;
     border-radius: 15px;
     transition: all 0.5s;
 }
-.btn-basic:hover{
+
+.btn-basic:hover {
     color: #fff;
     background-color: #1d6694;
+}
+
+/* Media Queries für Responsivität */
+@media (max-width: 1200px) {
+    .box.large, .box.xxl {
+        width: 100%; /* Breite auf 100% setzen, um den verfügbaren Platz zu nutzen */
+    }
+}
+
+@media (max-width: 992px) {
+    .section-1-ct, .section-2-ct {
+        flex-direction: column; /* Stapele die Boxen untereinander bei mittleren Bildschirmen */
+        align-items: center; /* Zentriere die Boxen horizontal */
+    }
+    
+    .box.small {
+        width: 90%; /* Boxen auf 90% der Container-Breite setzen */
+        height: auto; /* Höhe automatisch anpassen */
+    }
+    
+    .box.large, .box.xxl {
+        width: 90%; /* Boxen auf 90% der Container-Breite setzen */
+        height: auto; /* Höhe automatisch anpassen */
+    }
+}
+
+@media (max-width: 768px) {
+    .pfp {
+        width: 30px; /* Kleinere Profilbildgröße für mobile Geräte */
+        height: 30px;
+    }
+    
+    .upper-container {
+        flex-direction: column; /* Stapelt das Profilbild und den Titel übereinander */
+        align-items: center;
+    }
+    
+    .profile-container {
+        position: static;
+        margin-top: 10px; /* Abstand über dem Profilbild */
+    }
+
+    .dropdown-menu {
+        right: 10px;
+    }
+    
+    .overlay-text {
+        left: 50%;
+        transform: translateX(-50%); /* Zentriert den Overlay-Text horizontal */
+    }
+
+    #section-3 {
+        flex-direction: column; /* Stapele die Boxen untereinander bei kleinen Bildschirmen */
+        align-items: center;
+    }
+
+    .section-3-ct {
+        height: auto; /* Höhe auf automatisch setzen, um den Inhalt zu passen */
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-basic {
+        padding: 10px; /* Kleinere Schaltfläche auf mobilen Geräten */
+    }
+    
+    .box {
+        margin: 10px; /* Reduziere den Rand der Boxen */
+        padding: 15px; /* Reduziere das Padding der Boxen */
+        width: 100%; /* Boxen auf 100% der Container-Breite setzen */
+        height: 250px; /* Gleiche Höhe für alle Boxen */
+    }
 }
