@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOAT Services - Dashboard</title>
     <link rel="stylesheet" href="style_dashboard.css">
+    <link rel="stylesheet" href="diagrammstyle.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
     <script src="dropdown.js" defer></script>
     <script src="../js/fade-in.js" defer></script>
     <script src="../js/linkscripts.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </head>
 <body>
     <div class="upper-container">
@@ -65,6 +69,9 @@
                     You need to <a href="">link your Discord</a> account before you can gain access to this.
                 <?php else: ?>
                     <!-- Wenn DC verlinkt, dann: -->
+                    <div id="chart-container">
+                        <canvas id="visitsChart"></canvas>
+                    </div>
                 <?php endif; ?>
             </div>
             
