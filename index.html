@@ -27,11 +27,30 @@
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
-            <button onclick="window.location.href='/dashboard/login.php'" >
+            <button onclick="window.location.href='/dashboard/login.php'">
                 Login / Sign Up
             </button>
-            
+            <div class="menu-icon" onclick="toggleMenu()">
+                &#9776;
+            </div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <ul class="dropdown__links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="socials.html">Socials</a></li>
+                    <li><a href="/games">Mini Games</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
         </header>
+        <script>
+            function toggleMenu() {
+                var dropdownMenu = document.getElementById("dropdownMenu");
+                dropdownMenu.classList.toggle('show');
+            }
+            </script>
+            
+            
+            
         <div class="infotext-top">
             <h1>Code. Smarter.</h1>
             <div class="infotext-p">
