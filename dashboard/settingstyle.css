@@ -40,14 +40,15 @@ body {
     user-select: none;
     cursor: pointer;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
 }
 .option:hover {
     border: solid 2px #164ea1;
     color: rgb(176, 176, 176);
 }
 .option i{
-    display: flex;
-    flex-direction: row;
+    padding: 10px;
 }
 .content-container {
     flex: 1;
