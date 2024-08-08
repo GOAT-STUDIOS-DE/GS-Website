@@ -1,29 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #272727, #808080); /* Grau zu helleres Grau Verlauf */
+    font-family: 'Poppins';
+    background: linear-gradient(to bottom, #272727, #808080);
     background-color: #808080;
-    background-size: 100% 100vh; /* Die Größe des Hintergrunds auf 100% der Breite und 100vh der Höhe setzen */
-    background-repeat: no-repeat; /* Verhindert das Wiederholen des Hintergrunds */
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
     margin: 0;
     padding: 0;
-    color: #fff; /* Textfarbe auf Weiß setzen für bessere Lesbarkeit */
-}
-
-
-h1 {
-    text-align: center;
-    margin: 20px 0;
-}
-
-h1 a {
     color: #fff;
-    text-decoration: none;
-    font-size: 1.5rem;
+}
+/* Keyframes für die Einblend-Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-h1 a:hover {
-    text-decoration: underline;
+/* Standard-Stil für unsichtbare Elemente */
+.hidden {
+    opacity: 0;
+    visibility: hidden; /* Versteckt das Element ohne Layout zu beeinflussen */
 }
+
+
+/* Klasse für die Animation */
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
 
 .container {
     padding: 20px;
@@ -32,7 +42,16 @@ h1 a:hover {
 h2 {
     text-align: center;
     margin: 10px 0;
-    color: #fff; /* Textfarbe auf Weiß setzen */
+    color: #fff;
+}
+a{
+    color: #2270E2;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+a:hover{
+    color: #1953aa;
 }
 .pfp{
     width: 40px;
@@ -40,6 +59,8 @@ h2 {
     border-radius: 33px;
     display: flex;
     align-self: center;
+    cursor: pointer;
+    margin-left: 20px;
 }
 .upper-container{
     display: flex;
@@ -51,4 +72,193 @@ h2 {
     flex-grow: 1;
     text-align: center;
     margin: 0;
+}
+.profile-container {
+    position: relative;
+    position: absolute;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #272727;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 150px;
+    padding: 10px;
+    opacity: 0; /* Startwert für die Opazität */
+    visibility: hidden; /* Verhindert Interaktion, wenn unsichtbar */
+    transition: opacity 0.3s ease, visibility 0s ease 0.3s; /* Übergänge für die Opazität und Sichtbarkeit */
+}
+
+/* Sichtbares Dropdown-Menü */
+.dropdown-menu.show {
+    opacity: 1; /* Endwert für die Opazität */
+    visibility: visible; /* Sichtbar machen */
+    transition: opacity 0.3s ease; /* Übergang nur für die Opazität */
+}
+
+.dropdown-item i {
+    padding-right: 10px;
+}
+
+#last {
+    border-bottom: 1px solid #929292;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+#logout-btn {
+    color: #ef1a1a;
+    transition: all 0.3s;
+}
+
+#logout-btn:hover {
+    color: #e22f2286;
+}
+
+.dropdown-item {
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    color: #2270E2;
+}
+#notlinked {
+    filter: blur(3px);
+    position: relative;
+    user-select: none;
+}
+
+.overlay-text{
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-top: 50px;
+}
+.overlay-text a{
+    color: #2270E2;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+.overlay-text a:hover{
+    color: #1953aa;
+}
+/* General Design */
+#section-1 {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Horizontale Zentrierung */
+}
+#section-2{
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Horizontale Zentrierung */
+}
+#section-3{
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Horizontale Zentrierung */
+}
+
+.section-1-ct {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: center;
+}
+.section-2-ct{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: center;
+}
+
+.section-3-ct{
+    display: flex;
+    flex-direction: row;
+    height: 200px;
+}
+.appliation-ct{
+    display: flex;
+    flex-direction: column;
+}
+.contact-ct{
+    display: flex;
+    flex-direction: column;
+    font-weight: 400;
+}
+.box {
+    text-align: center;
+    background-color: #141414a1;
+    border-radius: 12px;
+    margin: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 8px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+.box.small{
+    width: 350px;
+    height: 250px;
+}
+.box.large{
+    width: 350px;
+    height: 520px;
+}
+.box.xxl{
+    width: 730px;
+    height: 320px;
+}
+.rest{
+    height: 100px;
+}
+
+.linked-app{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+.linked-app p{
+    padding-left: 10px;
+    font-size: 19px;
+    color: #00ff9d;
+}
+.linked-app i{
+    font-size: 40px;
+}
+.linked-app-ct{
+    display: flex;
+    justify-content: center;
+}
+.btn-basic{
+    padding: 20px;
+    background-color: #2f8ec9;
+    color: #fff; 
+    border-radius: 15px;
+    transition: all 0.5s;
+}
+.btn-basic:hover{
+    color: #fff;
+    background-color: #1d6694;
 }
