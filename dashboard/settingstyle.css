@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #272727, #808080);
+    background-color: #808080;
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.settings-container h1 {
+    display: flex;
+    align-self: center;
+}
+.settings-box {
+    display: flex;
+    background-color: #272727;
+    width: 80%;
+    height: 600px;
+    border-radius: 15px;
+    padding: 20px;
+    gap: 20px;
+}
+.options-container {
+    display: flex;
+    flex-direction: column;
+    width: 200px; /* Adjust width as needed */
+}
+.option {
+    padding: 10px;
+    border: solid 2px #2270E2;
+    border-radius: 0 14px 14px 0;
+    margin-bottom: 5px;
+    user-select: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.option:hover {
+    border: solid 2px #164ea1;
+    color: rgb(176, 176, 176);
+}
+.option i{
+    display: flex;
+    flex-direction: row;
+}
+.content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.content-section {
+    display: none; /* Hide all sections by default */
+    background-color: #1c1c1c;
+    border-radius: 15px;
+    padding: 20px;
+    flex: 1;
+}
+.content-section.active {
+    display: block; /* Show only the active section */
+}
+.content-section-ct{
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Zentriert alle Kinder horizontal */
+    text-align: left; /* Stellt sicher, dass der Text linksbündig ist */
+}
+.text1 {
+    display: contents; /* Lässt das Grid-Layout innerhalb der .text1-Klasse wirken */
+    color: #808080;
+}
+
+.text1 span {
+    font-weight: bold; /* Fett für Labels */
+}
+
+.text1 p {
+    margin: 0; /* Entfernt den Standard-Abstand der <p>-Tags */
+}
+.pfp{
+    width: 200px;
+    border-radius: 50%; /* Verwende 50% für einen runden Effekt */
+    margin-bottom: 20px; /* Abstand zwischen Bild und Texten */
+    user-select: none;
+    cursor: pointer;
+}
+.texts-ct {
+    margin-left: 17%;
+    display: grid;
+    grid-template-columns: 150px auto; /* Spalten für Labels und Werte */
+    gap: 10px; /* Abstand zwischen Spalten */
+}
+
+.smaller-spacing {
+    margin-bottom: 5px; /* Feinerer Abstand für spezifische Elemente */
+}

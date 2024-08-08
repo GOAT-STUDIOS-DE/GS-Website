@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings</title>
+    <link rel="stylesheet" href="settingstyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="../js/keypuller.js"></script>
+</head>
+<body>
+    <section id="section-1">
+        <div class="settings-container">
+            <h1>Settings</h1>
+            <div class="settings-box">
+                <div class="options-container">
+                    <div class="option" data-target="profile"><i class='bx bx-user'></i>Account</div>
+                    <div class="option" data-target="password">Password & Secruity</div>
+                    <div class="option" data-target="cookies">Cookies</div>
+                    <div class="option" data-target="linked-apps">Linked apps</div>
+                </div>
+                <div class="content-container">
+                    <div id="account" class="content-section">
+                        <div class="content-section-ct">
+                            <h1>Account</h1>
+                            <img src="placeholder-person.jpg" alt="Placeholder" class="pfp">
+                            <div class="texts-ct">
+                                <div class="text1 smaller-spacing">
+                                    <span>Username:</span> <p>user</p>
+                                </div>
+                                <div class="text1 smaller-spacing">
+                                    <span>Email:</span> <p>example@mail.com</p>
+                                </div>
+                                <div class="text1 smaller-spacing">
+                                    <span>Discord:</span> <p>Not linked</p>
+                                </div>
+                                <div class="text1">
+                                    <span>Key:</span> <p id="key" class="key">testkey</p>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                    <div id="password" class="content-section">
+                        <div class="content-section-ct">
+                            <h1>Password & Secruity</h1>
+                        </div>
+                    </div>
+                    <div id="cookies" class="content-section">
+                        <div class="content-section-ct">
+                            <h1>Cookies</h1>
+                        </div>
+                    </div>
+                    <div id="linked-apps" class="content-section">
+                        <div class="content-section-ct">
+                            <h1>Linked apps</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
