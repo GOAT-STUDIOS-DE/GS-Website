@@ -53,6 +53,9 @@ a{
 a:hover{
     color: #1953aa;
 }
+.dev.text{
+    color: #12b576cd;
+}
 .pfp{
     width: 40px;
     height: 40px;

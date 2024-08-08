@@ -16,25 +16,30 @@ require 'connection.php';
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="dropdown.js" defer></script>
     <script src="../js/fade-in.js" defer></script>
+    <script src="../js/linkscripts.js" defer></script>
 </head>
 <body>
     <div class="upper-container">
         <h1>
-            <?php if(isset($_SESSION['is_developer']) && $_SESSION['is_developer']): ?>
-                <div id="developerBadge" style="display: inline-block; background-image: url('../assets/dev-badge.png'); background-size: contain; background-repeat: no-repeat; padding-left: 50px; background-position: 10px center;">
-                    GOAT Services
-                </div>
-                <span style="vertical-align: middle;"> - Entwicklermodus</span>
-            <?php else: ?>
                 <div id="developerBadge">GOAT Services</div>
+                <?php if(isset($_SESSION['is_developer']) && $_SESSION['is_developer']): ?>
+                <span style="vertical-align: middle;" class="dev.text"> Entwicklermodus</span>
             <?php endif; ?>
         </h1>
         <div class="profile-container">
             <img src="placeholder-person.jpg" alt="Profile Image" class="pfp" id="profileImage">
             <div id="dropdownMenu" class="dropdown-menu">
-                <a href="#" class="dropdown-item"><i class='bx bx-user'></i>Profile</a>
-                <a href="#" class="dropdown-item" id="last"><i class='bx bx-cog'></i>Settings</a>
-                <a href="#" class="dropdown-item" id="logout-btn"><i class='bx bx-log-out'></i>Logout</a>
+                <?php if(isset($_SESSION["discord_username"])): ?>
+                    <a href="https://goat-services.de/discordpages/<?php echo urlencode($_SESSION["discord_username"]); ?>" class="dropdown-item">
+                        <i class='bx bx-user'></i>Profile
+                    </a>
+                <?php else: ?>
+                    <a href="https://goat-services.de/discordpages/no_profile.html" class="dropdown-item">
+                        <i class='bx bx-user'></i>Profile
+                    </a>
+                <?php endif; ?>
+                <a href="settings.php" class="dropdown-item" id="last"><i class='bx bx-cog'></i>Settings</a>
+                <a href="logout.php" class="dropdown-item" id="logout-btn"><i class='bx bx-log-out'></i>Logout</a>
             </div>
         </div>
     </div>
@@ -70,11 +75,9 @@ require 'connection.php';
             <div class="box xxl hidden" id="notlinked">
                 <h1>Profile Views</h1>
             </div>
-            <div class="overlay-text hidden">
+            <div class="overlay-text hidden" data-discord-linked="<?php echo isset($_SESSION["discord_username"]) ? 'true' : 'false'; ?>">
                 <?php if(!isset($_SESSION["discord_username"])): ?>
                     You need to <a href="">link your Discord</a> account before you can gain access to this.
-                <?php else: ?>
-                    <a href="https://goat-services.de/discordpages/<?php echo htmlspecialchars($_SESSION["discord_username"]); ?>">https://goat-services.de/discordpages/<?php echo htmlspecialchars($_SESSION["discord_username"]); ?></a> 
                 <?php endif; ?>
             </div>
         </div>

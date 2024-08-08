@@ -72,7 +72,6 @@ if (isset($_POST['submit'])) {
             </div>
             <!-- Link zum Erstellen eines neuen Accounts -->
             <a href="index.php">Account erstellen!</a>
-            <a href="PASSWORT VERGESSEN">Passwort vergessen?</a>
             <!-- Anzeige der Fehlermeldung, falls vorhanden -->
             <!-- <?php if (!empty($errorMessage)): ?>
                 <div class="error-message"><?php echo htmlspecialchars($errorMessage); ?></div>

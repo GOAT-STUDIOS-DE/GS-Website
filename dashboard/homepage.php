@@ -32,7 +32,17 @@ if (!isset($_SESSION['username'])) {
         <div id="developerBadge">GOAT Services</div>
     <?php endif;?>
 </h1>
-<img src="placeholder-person.jpg" alt="" class="pfp">
+<div class="profile-container">
+    <img src="placeholder-person.jpg" alt="" class="pfp" id="profilePicture">
+    <div id="dropdownMenu" class="dropdown-content">
+        <a href="settings.php">Settings</a>
+        <?php if(isset($_SESSION['is_developer']) && $_SESSION['is_developer']): ?>
+        <a href="https://goat-services.de/chat">Dev Chat</a>
+    <?php endif; ?>
+    <a href="logout.php">Logout</a>
+
+</div>
+</div>
 </div>
 
 <div class="container mt-4">
@@ -55,13 +65,112 @@ if (!isset($_SESSION['username'])) {
         <h2>Discord-Benutzername: Nicht verfügbar</h2>
     <?php endif; ?>
 
-    <h1><a href="settings.php">Settings</a></h1>
 
-    <?php if(isset($_SESSION['is_developer']) && $_SESSION['is_developer']): ?>
-        <h1><a href="https://goat-services.de/chat">Dev Chat</a></h1>
-    <?php endif; ?>
 
-    <h1><a href="logout.php">Logout</a></h1>
+
 </div>
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #272727, #808080); /* Grau zu helleres Grau Verlauf */
+    background-color: #808080;
+    background-size: 100% 100vh; /* Die Größe des Hintergrunds auf 100% der Breite und 100vh der Höhe setzen */
+    background-repeat: no-repeat; /* Verhindert das Wiederholen des Hintergrunds */
+    margin: 0;
+    padding: 0;
+    color: #fff; /* Textfarbe auf Weiß setzen für bessere Lesbarkeit */
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+h1 a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+h1 a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin: 10px 0;
+    color: #fff; /* Textfarbe auf Weiß setzen */
+}
+.pfp {
+    width: 40px;
+    height: 40px;
+    border-radius: 33px;
+    display: flex;
+    align-self: center;
+    cursor: pointer;
+}
+.upper-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px;
+}
+.upper-container h1 {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+}
+.profile-container {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+.show {
+    display: block;
+}
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var profilePicture = document.getElementById('profilePicture');
+        var dropdownMenu = document.getElementById('dropdownMenu');
+
+        profilePicture.addEventListener('click', function() {
+            dropdownMenu.classList.toggle('show');
+        });
+
+        window.addEventListener('click', function(event) {
+            if (!event.target.matches('.pfp')) {
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownMenu.classList.remove('show');
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>
