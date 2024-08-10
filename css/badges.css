@@ -15,7 +15,7 @@ h1{
 }
 
 
-i{
+i:not(.bx.bxl-discord-alt){
     color: #fff;
     padding: 10px;
     background-color: black;
