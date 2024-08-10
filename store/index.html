@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GS | Store</title>
     <link rel="stylesheet" href="../css/store/style.css">
-    <link rel="stylesheet" href="../css/navbar.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    
     <section id="title">
         <h1>GOAT Services</h1>
         <h2 class="STORE">STORE</h2>
@@ -32,7 +31,7 @@
                             <p class="preis">5€</p>
                         </div>
                     </div>
-                    <a href="" class="redirect-btn">Angebote anzeigen</a>
+                    <a href="#" class="redirect-btn">Angebote anzeigen</a>
                 </div>
                 <div class="box small" id="normal-box">
                     <h2>Server plugin</h2>
@@ -45,7 +44,7 @@
                         <p class="">ab</p>
                         <p class="preis">5€</p>
                     </div>
-                    <a href="" class="redirect-btn">Angebote anzeigen</a>
+                    <a href="#" class="redirect-btn">Angebote anzeigen</a>
                 </div>
             </div>
             <h1>Bundles</h1>
@@ -62,7 +61,7 @@
                         <p class="">ab</p>
                         <p class="preis">15€</p>
                     </div>
-                    <a href="" class="redirect-btn">Angebote anzeigen</a>
+                    <a href="#" class="redirect-btn">Angebote anzeigen</a>
                 </div>
                 <div class="box mid" id="bundle-box">
                     <h2>All-in Bundle</h2>
@@ -78,10 +77,147 @@
                         <p class="">ab</p>
                         <p class="preis">20€</p>
                     </div>
-                    <a href="" class="redirect-btn">Angebote anzeigen</a>
+                    <a href="#" class="redirect-btn">Angebote anzeigen</a>
                 </div>
             </div>
         </div>
     </section>
+
+
+
+
+
+
+
+
+    <!-- Modal Box -->
+    <div id="modal" class="modal active">
+
+
+        <a class="close-btn" id="close-btn"><i class='bx bx-x'></i></a>
+
+        <div class="modal-ct">
+            <div class="text-ct-modal">
+                <h1>Produkt</h1>
+            </div>
+            <div class="selection">
+                <ul>
+                    <li><a href="" id="active">Small</a></li>
+                    <li><a href="">Mid</a></li>
+                    <li><a href="">Large</a></li>
+                </ul>
+            </div>
+            <div class="rest-ct-modal">
+                <button class="collapsible" id="contitions-btn">Conditions <i class='bx bx-chevron-right'></i></button>
+                <div class="content">
+                    <p class="option">Condition.</p>
+                    <p class="option">Condition.</p>
+                    <p class="option">Condition.</p>
+                </div>
+                <p class="middle-font">Features:</p>
+                <div class="features-ct">
+                    <ul>
+                        <li class="item">Die perfekte Einrichtung für deinen Server</li>
+                        <li class="item">Wunsch Plugins werden angepasst</li>
+                        <li class="item">uvm.</li>
+                        <li class="item">uvm.</li>
+                        <li class="item">uvm.</li>
+                    </ul>
+                </div>
+                <hr class="separator">
+                <div class="preisanzeige">
+                    <p class="">ab</p>
+                    <p class="preis">15€</p>
+                </div>
+                <a href="" id="buy-btn"><i class='bx bx-cart-alt' id="cart-icon" ></i>Add to Cart</a>
+            </div>
+            
+        </div>
+
+
+    </div>
+    <div id="modal-overlay" class="modal-overlay"></div>
+
+
+
+
+
+
+
+
+
+    <script>
+        // Holen der Elemente
+        const redirectBtns = document.querySelectorAll('.redirect-btn');
+        const modal = document.getElementById('modal');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const closeBtn = document.getElementById('close-btn');
+
+        // Funktion zum Öffnen des Modals
+        function openModal() {
+            modal.classList.add('active');
+            modalOverlay.classList.add('active');
+        }
+
+        // Funktion zum Schließen des Modals
+        function closeModal() {
+            modal.classList.remove('active');
+            modalOverlay.classList.remove('active');
+        }
+
+        // Hinzufügen des Click-Events zu jedem Button
+        redirectBtns.forEach(btn => {
+            btn.addEventListener('click', function(event) {
+                event.preventDefault(); // Verhindert das Standardverhalten des Links
+                openModal(); // Öffnet das Modal
+            });
+        });
+
+        // Click-Event zum Schließen des Modals
+        closeBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
+
+
+        const coll = document.querySelectorAll('.collapsible');
+
+        coll.forEach(button => {
+            button.addEventListener('click', function() {
+                // Die aktive Klasse toggeln
+                this.classList.toggle('active');
+
+                // Nächste Element (den Content) holen
+                const content = this.nextElementSibling;
+
+                // Die Anzeige des Contents toggeln
+                content.classList.toggle('show');
+            });
+        });
+
+        // ..
+        document.addEventListener('DOMContentLoaded', () => {
+    const selectionLinks = document.querySelectorAll('.selection li a');
+
+    function setActive(event) {
+        event.preventDefault();
+
+        // Entferne die 'active' ID von allen Links
+        selectionLinks.forEach(link => {
+            link.removeAttribute('id');
+        });
+
+        // Füge die 'active' ID zum geklickten Link hinzu
+        event.target.setAttribute('id', 'active');
+    }
+
+    selectionLinks.forEach(link => {
+        link.addEventListener('click', setActive);
+    });
+
+    // Setze den ersten Link als aktiv, wenn keine andere Auswahl getroffen wurde
+    if (selectionLinks.length > 0) {
+        selectionLinks[0].setAttribute('id', 'active');
+    }
+});
+</script>
 </body>
 </html>

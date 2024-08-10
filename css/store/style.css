@@ -10,6 +10,7 @@
     margin: 0;
     padding: 0;
     color: #F8F8FF;
+    text-decoration: none;
 }
 body{
     background: linear-gradient(to bottom, #272727, #808080); /* Grau zu helleres Grau Verlauf */
@@ -154,4 +155,187 @@ h2{
 }
 .redirect-btn:hover{
     background-color: #1e62c7;;
+}
+.modal {
+    display: none; /* Startet versteckt */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+    height: 600px;
+    border-radius: 16px;
+    background-color: #272727f9;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: block; /* Wird angezeigt, wenn die Klasse "active" hinzugefügt wird */
+}
+
+/* Für den Overlay-Hintergrund */
+.modal-overlay {
+    display: none; /* Startet versteckt */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-overlay.active {
+    display: block; /* Wird angezeigt, wenn die Klasse "active" hinzugefügt wird */
+}
+
+/* Schließen-Button */
+#close-btn {
+    color: #ffffff;
+    cursor: pointer;
+    float: right;
+    font-size: 30px;
+}
+
+.collapsible {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 20%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+}
+
+.collapsible.active {
+    background-color: #0056b3;
+}
+
+.content {
+    padding: 0 5px;
+    color: #39a962;
+    display: none;
+    overflow: hidden;
+}
+.option{
+    color: #f24c4c;
+}
+
+.content.show {
+    display: block;
+}
+
+li{
+    cursor: pointer;
+}
+
+
+.modal-ct{
+}
+.text-ct-modal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.selection{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.selection ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    
+}
+.selection li{
+    display: inline-block;
+    padding: 0px 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative;
+    
+}
+
+.selection li a{
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease-in 0s;
+    text-decoration: none;
+    font-weight: 700;
+}
+.selection li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #44C975; /* Farbe des Unterstrichs */
+    transition: transform 0.3s ease, width 0.3s ease; /* Animationsdauern und -arten */
+    transform: scaleX(0); /* Anfangszustand: nicht sichtbar */
+    transform-origin: bottom left; /* Startpunkt für die Animation */
+}
+
+#active::after {
+    transform: scaleX(1); /* Endzustand: voll sichtbar */
+}
+#active {
+    color: #44C975;
+    text-decoration: none; /* Entfernt die standardmäßige Unterstreichung */
+    border-bottom: 1px solid #44C975; /* Fügt eine dickere Unterstreichung hinzu */
+}
+#contitions-btn{
+    padding: 0px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
+}
+
+.middle-font{
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.separator {
+    border: 0;
+    height: 1px;
+    background-color: #858585; /* Farbe der Linie */
+    margin: 20px 20px; /* Abstand oben und unten */
+}
+.features-ct{
+    display: flex;
+    margin-left: 20px;
+}
+#buy-btn{
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    background-color: #44C975;
+    color: #757474;
+    padding: 10px;
+    align-self: center; /* Zentriert den Button horizontal */
+    margin-top: 30px; /* Fügt Abstand von oben hinzu */
+    transition: all 0.3s;
+}   
+#buy-btn:hover{
+    background-color: #44C975ad;
+}
+#cart-icon{
+    color: #858585;
+    align-items: center;
+    padding-right: 10px;
+}
+.rest-ct-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
