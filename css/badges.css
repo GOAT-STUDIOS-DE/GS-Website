@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+h1{
+    font-family: 'Poppins';
+    font-weight: 500;
+    color: #fff;
+}
+.badges-ct{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.text-ct{
+    display: flex;
+    justify-content: center;
+}
+
+
+i{
+    color: #fff;
+    padding: 10px;
+    background-color: black;
+    border-radius: 100%;
+    font-size: 20px;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+#dev-badge{
+    background-color: #312566;
+    color: #ffffff;
+}
+#dev-badge:hover{
+    background-color: #312566ad;
+}
+#team-badge{
+    background-color: #24c57a;
+    color: #fffcfc;
+}
+#team-badge:hover{
+    background-color: #24c57aad;
+}
+#mod-badge{
+    background-color: #1670ba;
+    color: #fce1e1;
+}
+#mod-badge:hover{
+    background-color: #1670baad;
+}
+#admin-badge{
+    background-color: #793c3c;
+    color: #c4b016;
+}
+#admin-badge:hover{
+    background-color: #793c3cad;
+
+}
+#discord-badge{
+    background-color: #1670ba;
+    color: #fff;
+}
+#discord-badge:hover{
+    background-color: #1670baad;
+}

@@ -1,3 +1,7 @@
+/* #808080;
+    #2270E2;
+    #12b576cd;
+*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
@@ -5,69 +9,149 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    list-style: none;
+    color: #F8F8FF;
 }
-
-body {
-    background-color: #272727;
+body{
+    background: linear-gradient(to bottom, #272727, #808080); /* Grau zu helleres Grau Verlauf */
+    background-color: #808080;
     background-size: 100% 100vh; /* Die Größe des Hintergrunds auf 100% der Breite und 100vh der Höhe setzen */
     background-repeat: no-repeat; /* Verhindert das Wiederholen des Hintergrunds */
-    height: 100vh;
-    padding: 25px;
-    color: #fff;
 }
-a{
-    text-decoration: none;
+#title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.text-container-top{
-    margin-bottom: 100px;
+#store{
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
-.text-container-top h1{
-    font-size: 60px;
+
+.box{
+    margin: 10px;
+    background-color: #2727274a;
+    border-radius: 10%;
+    width: 220px;
+    height: 200px;
+    list-style-position: inside;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.3s ;
 }
-.btn{
-    padding: 15px;
-    border-radius: 12px;
-    background-color: #2270E2;
-    color: #fff;
-    margin-top: 10px;
+.box ul{
+    /* flex-grow: 1;   */ /* Auskommentieren wenn zwischen <li> und dem Preis alles "lehr" Platz einnehmen soll lmao*/
 }
-.mid-text-container{
+.box:hover{
+    background-color: #272727db;
+}
+.box.small{
+    width: 310px;
+    height: 290px;
+}
+.box.mid{
+    width: 440px;
+    height: 320px;
+}
+
+.minecraft-section{
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
-.angebote-container{
-    display: flex;
-    justify-content: center;
+.minecraft-box{
+    width: 900px;
+    height: 250px;
+    border-radius: 40px;
+    background-image:url(../../store/mc.webp);
+    background-position: 50% 50%;
+    box-shadow: 3px 5px 2px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    cursor: pointer;
 }
-.angebot{
-    width: 300px;
-    height: 600px;
-    background-color: #ffffff;
-    opacity: 80%;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 7px;
+.minecraft-box:hover{
+    filter: blur(2px);
 }
-.angebot a{
-    color: rgb(37, 37, 37);
-    font-size: 23px;
-}
-.angebot p, h4, h3{
-    color: rgb(37, 37, 37);
-}
-.angebot-container{
+.minecraft-box p{
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    margin-top: 210px;
+    color: #ffffff;
+    text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
 }
-.angebot p{
-    color: #61a0ff;
+.mc-general-ct{
+    display: flex;
+    flex-direction: row;
+}
+.bundles-ct{
+    display: flex;
+    flex-direction: row;
+}
+ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: disc;
+    margin: 10px 0px 10px;
+}
+
+.item {
+    color: #cfcaca; 
+    transition: all 0.3s;
+}
+.item::marker {
+    color: #8f8f8f; /* Farbe der Aufzählungspunkte */
+}
+.item:hover{
+    color: #39a962;
+}
+h1{
+    font-size: 30px;
+    cursor: pointer;
+}
+.STORE{
+    font-size: 40px;
+    color: #2270E2;
+    cursor: pointer;
+}
+h2{
+    font-size: 20px;
+    font-weight: 500;
+}
+.preisanzeige{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.preisanzeige p{
+    padding: 3px;
+}
+.preis{
+    display: flex;
+    font-size: 20px;
+    color: #44C975;
+}
+#bundle-box{
+    margin: 0px 10px 0px 10px;
+}
+#normal-box{
+    margin: 20px 140px 0px 140px;
+}
+#bundle-box ul{
+    flex-grow: 1;
+}
+.redirect-btn{
+    padding: 10px;
+    background-color: #2270E2;
+    border-radius: 12px;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+.redirect-btn:hover{
+    background-color: #1e62c7;;
 }
