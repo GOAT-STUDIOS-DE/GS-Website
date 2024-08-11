@@ -123,3 +123,34 @@ h1 {
     justify-content: center;
     align-items: center;
 }
+@media (max-width: 768px) {
+    .infotext-p {
+        width: 330%;
+    }
+    .shop-btn {
+        margin-top: 2vh;
+    }
+
+    #bottom-section {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Positioniert das Element am oberen Rand */
+        margin-left: 0; /* Entfernt das margin-left für mobile Geräte */
+        padding: 20px 0; /* Optionales Padding für vertikale Zentrierung */
+    }
+
+    .bottom-housing {
+        margin: -350px auto 0 auto; /* Verschiebt das Element deutlich nach oben */
+        text-align: center; /* Zentriert den Text innerhalb des Elements */
+        height: auto; /* Keine feste Höhe, damit das Element flexibel bleibt */
+    }
+
+    .dc-box {
+        margin-top: 10px; /* Minimaler Abstand nach unten */
+    }
+
+    .dc-btn {
+        margin-top: 15px; /* Fügt einen Abstand zwischen der Box und dem Button hinzu */
+    }
+}
+
