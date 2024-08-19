@@ -2,15 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const options = document.querySelectorAll('.option');
     const sections = document.querySelectorAll('.content-section');
 
-    // Zeigt die Profile-Sektion standardmäßig an
-    const defaultSectionId = 'account'; // ID der Profile-Sektion
-    sections.forEach(section => {
-        if (section.id === defaultSectionId) {
-            section.classList.add('active');
-        } else {
-            section.classList.remove('active');
-        }
-    });
+    // Zeigt die Account-Sektion standardmäßig an
+    const defaultSectionId = 'account'; // ID der Account-Sektion
+    document.getElementById(defaultSectionId).classList.add('active');
 
     options.forEach(option => {
         option.addEventListener('click', () => {
@@ -18,9 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             sections.forEach(section => {
                 if (section.id === targetId) {
-                    section.classList.add('active');
-                } else {
-                    section.classList.remove('active');
+                    // Aktiviert die Sektion nur, wenn sie nicht bereits aktiv ist
+                    if (!section.classList.contains('active')) {
+                        sections.forEach(s => s.classList.remove('active')); // Deaktiviert alle anderen Sektionen
+                        section.classList.add('active'); // Aktiviert die angeklickte Sektion
+                    }
                 }
             });
         });

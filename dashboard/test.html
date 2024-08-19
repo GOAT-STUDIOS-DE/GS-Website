@@ -60,42 +60,44 @@
         <div class="section-2-ct">
             <div class="box xxl hidden" id="notlinked">
                 <h1>Profile Views</h1>
-            </div>
-            <div class="overlay-text hidden" data-discord-linked="<?php echo isset($_SESSION["discord_username"]) ? 'true' : 'false'; ?>">
-                <?php if(!isset($_SESSION["discord_username"])): ?>
-                    You need to <a href="">link your Discord</a> account before you can gain access to this.
-                <?php else: ?>
-                    <!-- Wenn DC verlinkt, dann: -->
-                    
-                <?php endif; ?>
-            </div>
-            
+                <div class="overlay-text" data-discord-linked="<?php echo isset($_SESSION["discord_username"]) ? 'true' : 'false'; ?>">
+                    <?php if(!isset($_SESSION["discord_username"])): ?>
+                        You need to <a href="">link your Discord</a> account before you can gain access to this.
+                    <?php else: ?>
+                        <!-- Wenn DC verlinkt, dann: -->
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </section>
+    
 
     <section id="section-3">
         <div class="section-3-ct">
             <div class="left-column">
-                <div class="box small hidden">
+                <div class="box small hidden" id="application-box">
                     <div class="application-ct">
                         <h1>Join Our Team</h1>
                         <a href="" class="btn-basic">Apply</a>
                     </div>
                 </div>
-                <div class="box small hidden">
+                <div class="box small hidden" id="contact-box">
                     <div class="contact-ct">
                         <h1>Contact</h1>
                         <a href="" class="btn-basic">Send us a Message</a>
                     </div>
                 </div>
             </div>
-            <div class="box large hidden">
+            <div class="box large hidden" id="suggested-box">
                 <h1>Suggested</h1>
             </div>
         </div>
     </section>
-    <div class="rest"></div>
+    <div class="view-more-ct">
+        <a href="" class="view-more">View More</a>
+    </div>
+    <div class="rest">
 
+    </div>
 </body>
 </html>

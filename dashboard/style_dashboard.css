@@ -147,21 +147,31 @@ a:hover {
 }
 
 #notlinked {
+    position: relative; /* Positionierung für das Overlay-Text */
     filter: blur(3px);
-    position: relative;
     user-select: none;
 }
 
 .overlay-text {
     position: absolute;
     top: 50%;
-    left: 35%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
     padding: 10px;
     border-radius: 5px;
     font-weight: 600;
-    margin-top: 50px;
+    background-color: rgba(0, 0, 0, 0.7); /* Hintergrundfarbe für bessere Lesbarkeit */
+    color: #fff;
+    display: none; /* Standardmäßig versteckt */
+}
+
+#notlinked[data-discord-linked="false"] .overlay-text {
+    display: block; /* Nur anzeigen, wenn Discord nicht verlinkt ist */
+}
+
+#notlinked[data-discord-linked="true"] .overlay-text {
+    display: none; /* Verstecken, wenn Discord verlinkt ist */
 }
 
 .overlay-text a {
@@ -263,75 +273,51 @@ a:hover {
     color: #fff;
     background-color: #1d6694;
 }
-
-/* Media Queries für Responsivität */
-@media (max-width: 1200px) {
-    .box.large, .box.xxl {
-        width: 100%; /* Breite auf 100% setzen, um den verfügbaren Platz zu nutzen */
-    }
-}
-
-@media (max-width: 992px) {
-    .section-1-ct, .section-2-ct {
-        flex-direction: column; /* Stapele die Boxen untereinander bei mittleren Bildschirmen */
-        align-items: center; /* Zentriere die Boxen horizontal */
-    }
-    
-    .box.small {
-        width: 90%; /* Boxen auf 90% der Container-Breite setzen */
-        height: auto; /* Höhe automatisch anpassen */
-    }
-    
-    .box.large, .box.xxl {
-        width: 90%; /* Boxen auf 90% der Container-Breite setzen */
-        height: auto; /* Höhe automatisch anpassen */
-    }
-}
-
 @media (max-width: 768px) {
-    .pfp {
-        width: 30px; /* Kleinere Profilbildgröße für mobile Geräte */
-        height: 30px;
-    }
-    
-    .upper-container {
-        flex-direction: column; /* Stapelt das Profilbild und den Titel übereinander */
-        align-items: center;
-    }
-    
-    .profile-container {
-        position: static;
-        margin-top: 10px; /* Abstand über dem Profilbild */
-    }
-
-    .dropdown-menu {
-        right: 10px;
-    }
-    
-    .overlay-text {
-        left: 50%;
-        transform: translateX(-50%); /* Zentriert den Overlay-Text horizontal */
-    }
-
-    #section-3 {
-        flex-direction: column; /* Stapele die Boxen untereinander bei kleinen Bildschirmen */
-        align-items: center;
+    .section-1-ct {
+        display: flex;
+        flex-direction: column;
     }
 
     .section-3-ct {
-        height: auto; /* Höhe auf automatisch setzen, um den Inhalt zu passen */
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        height: 90%; /* Höhe als Prozentsatz der Breite */
+        aspect-ratio: 1 / 1; /* Verhältnis 1:1 für quadratische Boxen */
     }
-}
 
-@media (max-width: 576px) {
-    .btn-basic {
-        padding: 10px; /* Kleinere Schaltfläche auf mobilen Geräten */
+    .left-column {
+        width: 90%;
+        height: 90%; /* Höhe als Prozentsatz der Breite */
+        aspect-ratio: 1 / 1; /* Verhältnis 1:1 für quadratische Boxen */
+    }
+
+    .box {
+        width: 90%;
+        height: 90%; /* Höhe als Prozentsatz der Breite */
+        aspect-ratio: 1 / 1; /* Verhältnis 1:1 für quadratische Boxen */
+    }
+
+    .box.small, .box.large, .box.xxl {
+        width: 90%;
+        height: 90%; /* Höhe als Prozentsatz der Breite */
+        aspect-ratio: 1 / 1; /* Verhältnis 1:1 für quadratische Boxen */
+    }
+
+    /* Versteckt die Boxen "Contact Us" und "Join Our Team" */
+    #contact-box, #application-box {
+        display: none;
+    }
+    #suggested-box{
+        margin-top: -90%;
+    }
+    .view-more-ct{
+        display: flex;
+        justify-content: center;
     }
     
-    .box {
-        margin: 10px; /* Reduziere den Rand der Boxen */
-        padding: 15px; /* Reduziere das Padding der Boxen */
-        width: 100%; /* Boxen auf 100% der Container-Breite setzen */
-        height: 250px; /* Gleiche Höhe für alle Boxen */
-    }
+}
+.view-more-ct{
+    display: none;
 }

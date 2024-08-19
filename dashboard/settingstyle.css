@@ -100,3 +100,51 @@ body {
 .smaller-spacing {
     margin-bottom: 5px; /* Feinerer Abstand für spezifische Elemente */
 }
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .settings-box {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .options-container {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .option {
+        flex-direction: column;
+        border-radius: 14px;
+        margin-bottom: 0;
+        border: solid 2px #2270E2; /* Show border by default */
+    }
+
+    .option i {
+        padding: 5px;
+        font-size: 1.2em;
+    }
+
+    .content-section {
+        padding: 10px;
+        border-radius: 10px;
+        background-color: transparent;
+    }
+
+    .pfp {
+        width: 150px;
+        margin-bottom: 15px;
+    }
+
+    .texts-ct {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    /* Textlabels ausblenden */
+    .text-label {
+        display: none;
+    }
+}
